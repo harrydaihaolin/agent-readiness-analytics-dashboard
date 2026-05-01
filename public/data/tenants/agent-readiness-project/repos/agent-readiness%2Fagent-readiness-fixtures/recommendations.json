@@ -1,0 +1,96 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-fixtures:safety.gitleaks_config",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "safety",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
+      "estimated_lift": 0.29,
+      "severity": "warn",
+      "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
+      "affected_checks": [
+        "safety.gitleaks_config"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-fixtures:manifest.lockfile_present",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "feedback",
+      "title": "At least one ecosystem-specific lockfile is committed",
+      "rationale": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
+      "estimated_lift": 0.27,
+      "severity": "warn",
+      "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
+      "affected_checks": [
+        "manifest.lockfile_present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-fixtures:manifest.detected",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "feedback",
+      "title": "No project manifest found (pyproject",
+      "rationale": "No project manifest found (pyproject.toml, package.json, Cargo.toml, go.mod, ...).",
+      "estimated_lift": 0.27,
+      "severity": "warn",
+      "fix_hint": "Drop a `pyproject.toml` (or `package.json` / `Cargo.toml` / etc.)\nat the repo root with at least name + version + dependencies. For\nmonorepos, every package directory should have its own manifest.\n",
+      "affected_checks": [
+        "manifest.detected"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-fixtures:repo_shape.large_files",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "cognitive_load",
+      "title": "Large file: fixtures/noisy/src/noisy_fixture/generated",
+      "rationale": "Large file: fixtures/noisy/src/noisy_fixture/generated.py (804 lines > 500)",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+      "affected_checks": [
+        "repo_shape.large_files"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-fixtures:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

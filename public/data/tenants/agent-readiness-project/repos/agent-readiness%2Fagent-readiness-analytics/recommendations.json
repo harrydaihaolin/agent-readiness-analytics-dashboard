@@ -1,0 +1,114 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-analytics:feedback.test_command",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "feedback",
+      "title": "Add a discoverable test target to the Makefile",
+      "rationale": "Agents need a single canonical test command they can invoke headlessly. The strongest signal is a make test target.",
+      "estimated_lift": 6.4,
+      "severity": "warn",
+      "fix_hint": "Add a test: target that runs your test suite non-interactively.",
+      "affected_checks": [
+        "feedback.test_command"
+      ],
+      "file": "Makefile",
+      "line": null,
+      "snippet": "all:\n\tpython build.py\n",
+      "suggested_patch": "--- a/Makefile\n+++ b/Makefile\n@@ -1,2 +1,5 @@\n all:\n \tpython build.py\n+\n+test:\n+\tpytest\n",
+      "kind": "diff"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:git.has_history",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "flow",
+      "title": "Repository has no commits (not a git repo or empty)",
+      "rationale": "Repository has no commits (not a git repo or empty).",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing \u2014 agents need the trail.\n",
+      "affected_checks": [
+        "git.has_history"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:setup.command_count",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "flow",
+      "title": "Setup section has 7 distinct commands",
+      "rationale": "Setup section has 7 distinct commands \u2014 consider wrapping in `make install` or a setup script.",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "Bundle multi-step setup into a single `make setup` (or\n`scripts/setup`) target. The README then documents one command\ninstead of five. The script can still do five things \u2014 it just\nhides the noise from the agent.\n",
+      "affected_checks": [
+        "setup.command_count"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:gitignore.covers_junk",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "safety",
+      "title": "Gitignore: Covers Junk",
+      "rationale": ".gitignore covers 6/12 groups; missing: node_modules, go_vendor, rust_target, jvm_class, terraform, logs.",
+      "estimated_lift": 0.29,
+      "severity": "warn",
+      "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
+      "affected_checks": [
+        "gitignore.covers_junk"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:manifest.lockfile_present",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "feedback",
+      "title": "At least one ecosystem-specific lockfile is committed",
+      "rationale": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
+      "estimated_lift": 0.27,
+      "severity": "warn",
+      "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
+      "affected_checks": [
+        "manifest.lockfile_present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:meta.consistency",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "cognitive_load",
+      "title": "README references pytest but no pytest configuration was found",
+      "rationale": "README references pytest but no pytest configuration was found.",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "If your README says \"run `pytest`\", drop a `[tool.pytest.ini_options]`\ntable in pyproject.toml so a fresh checkout actually runs tests\nwith `pytest`. Same logic for any other tool you mention. Agent\ndocs should be \u2265 100 bytes of real content, not a stub.\n",
+      "affected_checks": [
+        "meta.consistency"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

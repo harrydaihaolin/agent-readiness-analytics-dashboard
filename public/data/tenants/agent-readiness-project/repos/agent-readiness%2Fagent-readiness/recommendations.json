@@ -1,0 +1,96 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness:headless.no_setup_prompts",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "flow",
+      "title": "Setup mentions a GUI step: 'log in to the dashboard'",
+      "rationale": "Setup mentions a GUI step: 'log in to the dashboard'.",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
+      "affected_checks": [
+        "headless.no_setup_prompts"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness:gitignore.covers_junk",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "safety",
+      "title": "Gitignore: Covers Junk",
+      "rationale": ".gitignore covers 6/12 groups; missing: go_vendor, rust_target, jvm_class, ide_junk, terraform, logs.",
+      "estimated_lift": 0.29,
+      "severity": "warn",
+      "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
+      "affected_checks": [
+        "gitignore.covers_junk"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness:git.churn_hotspots",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "cognitive_load",
+      "title": "Hotspot: src/agent_readiness/cli",
+      "rationale": "Hotspot: src/agent_readiness/cli.py changed 10 times and is >200 lines.",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
+      "affected_checks": [
+        "git.churn_hotspots"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness:docs.contributing_guide",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "cognitive_load",
+      "title": "None of these expected paths exist: CONTRIBUTING",
+      "rationale": "None of these expected paths exist: CONTRIBUTING.md, CONTRIBUTING, .github/CONTRIBUTING.md",
+      "estimated_lift": 0.12,
+      "severity": "info",
+      "fix_hint": "Add a CONTRIBUTING.md describing branch naming, commit style,\nrequired local checks, and the PR review flow.\n",
+      "affected_checks": [
+        "docs.contributing_guide"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

@@ -1,0 +1,78 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-action:manifest.lockfile_present",
+      "repo": "agent-readiness/agent-readiness-action",
+      "pillar": "feedback",
+      "title": "At least one ecosystem-specific lockfile is committed",
+      "rationale": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
+      "estimated_lift": 0.27,
+      "severity": "warn",
+      "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
+      "affected_checks": [
+        "manifest.lockfile_present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-action:manifest.detected",
+      "repo": "agent-readiness/agent-readiness-action",
+      "pillar": "feedback",
+      "title": "No project manifest found (pyproject",
+      "rationale": "No project manifest found (pyproject.toml, package.json, Cargo.toml, go.mod, ...).",
+      "estimated_lift": 0.27,
+      "severity": "warn",
+      "fix_hint": "Drop a `pyproject.toml` (or `package.json` / `Cargo.toml` / etc.)\nat the repo root with at least name + version + dependencies. For\nmonorepos, every package directory should have its own manifest.\n",
+      "affected_checks": [
+        "manifest.detected"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-action:readme.has_run_instructions",
+      "repo": "agent-readiness/agent-readiness-action",
+      "pillar": "cognitive_load",
+      "title": "README is missing signals for: install",
+      "rationale": "README is missing signals for: install.",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
+      "affected_checks": [
+        "readme.has_run_instructions"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-action:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-action",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

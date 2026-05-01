@@ -1,0 +1,42 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-pro:headless.no_setup_prompts",
+      "repo": "agent-readiness/agent-readiness-pro",
+      "pillar": "flow",
+      "title": "Setup mentions a GUI step: 'log in to the dashboard'",
+      "rationale": "Setup mentions a GUI step: 'log in to the dashboard'.",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
+      "affected_checks": [
+        "headless.no_setup_prompts"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-pro:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-pro",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

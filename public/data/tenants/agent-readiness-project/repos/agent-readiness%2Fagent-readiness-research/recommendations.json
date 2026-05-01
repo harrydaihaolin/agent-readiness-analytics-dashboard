@@ -1,0 +1,60 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-research:repo_shape.large_files",
+      "repo": "agent-readiness/agent-readiness-research",
+      "pillar": "cognitive_load",
+      "title": "Large file: scripts/checks_loop",
+      "rationale": "Large file: scripts/checks_loop.py (510 lines > 500)",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+      "affected_checks": [
+        "repo_shape.large_files"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-research:devcontainer.present",
+      "repo": "agent-readiness/agent-readiness-research",
+      "pillar": "flow",
+      "title": "At least one reproducible-workspace config is present",
+      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
+      "estimated_lift": 0.17,
+      "severity": "info",
+      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+      "affected_checks": [
+        "devcontainer.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-research:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-research",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

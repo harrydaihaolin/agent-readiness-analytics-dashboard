@@ -1,0 +1,96 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:entry_points.detected",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "flow",
+      "title": "At least one entry-point convention is present",
+      "rationale": "At least one entry-point convention is present. (no clause matched)",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
+      "affected_checks": [
+        "entry_points.detected"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:repo_shape.large_files",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "cognitive_load",
+      "title": "Large file: index",
+      "rationale": "Large file: index.html (1,049 lines > 500)",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+      "affected_checks": [
+        "repo_shape.large_files"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:readme.has_run_instructions",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "cognitive_load",
+      "title": "README is missing signals for: install",
+      "rationale": "README is missing signals for: install.",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
+      "affected_checks": [
+        "readme.has_run_instructions"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:git.churn_hotspots",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "cognitive_load",
+      "title": "Hotspot: data/scores",
+      "rationale": "Hotspot: data/scores.json changed 12 times and is >200 lines.",
+      "estimated_lift": 0.23,
+      "severity": "warn",
+      "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
+      "affected_checks": [
+        "git.churn_hotspots"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:templates.present",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "flow",
+      "title": "Issue templates, PR template, or CODEOWNERS configured",
+      "rationale": "Issue templates, PR template, or CODEOWNERS configured. (no clause matched)",
+      "estimated_lift": 0.17,
+      "severity": "info",
+      "fix_hint": "At minimum: drop `.github/ISSUE_TEMPLATE/bug_report.md` (GitHub has\na wizard), a `.github/PULL_REQUEST_TEMPLATE.md` with a checklist,\nand a `CODEOWNERS` file mapping `*` to the team that should review\nagent-opened PRs.\n",
+      "affected_checks": [
+        "templates.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

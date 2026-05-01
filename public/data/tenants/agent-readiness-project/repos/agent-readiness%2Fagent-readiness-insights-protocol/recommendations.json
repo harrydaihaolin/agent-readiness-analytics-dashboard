@@ -1,0 +1,42 @@
+{
+  "tenant_id": "agent-readiness-project",
+  "items": [
+    {
+      "id": "agent-readiness/agent-readiness-insights-protocol:entry_points.detected",
+      "repo": "agent-readiness/agent-readiness-insights-protocol",
+      "pillar": "flow",
+      "title": "At least one entry-point convention is present",
+      "rationale": "At least one entry-point convention is present. (no clause matched)",
+      "estimated_lift": 0.34,
+      "severity": "warn",
+      "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
+      "affected_checks": [
+        "entry_points.detected"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-insights-protocol:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-insights-protocol",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    }
+  ],
+  "generated_at": "2026-05-01T16:49:49.530857Z"
+}

@@ -1,0 +1,18 @@
+{
+  "repo": "agent-readiness/agent-readiness-fixtures",
+  "points": [
+    {
+      "timestamp": "2026-05-01T16:49:28.490813Z",
+      "overall_score": 75.0,
+      "pillars": {
+        "cognitive_load": 98.64864864864865,
+        "feedback": 91.77215189873418,
+        "flow": 100.0,
+        "safety": 95.65217391304348
+      }
+    }
+  ],
+  "score_delta": 0.0,
+  "delta_window_days": 30,
+  "optimization_events": []
+}

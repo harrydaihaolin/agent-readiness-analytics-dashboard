@@ -1,0 +1,18 @@
+{
+  "repo": "agent-readiness/agent-readiness-analytics-dashboard",
+  "points": [
+    {
+      "timestamp": "2026-05-01T16:49:27.062641Z",
+      "overall_score": 75.0,
+      "pillars": {
+        "cognitive_load": 97.29729729729729,
+        "feedback": 99.36708860759494,
+        "flow": 95.42857142857143,
+        "safety": 91.30434782608697
+      }
+    }
+  ],
+  "score_delta": 0.0,
+  "delta_window_days": 30,
+  "optimization_events": []
+}
