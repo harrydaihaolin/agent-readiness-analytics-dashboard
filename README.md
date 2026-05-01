@@ -41,11 +41,12 @@ CI (`.github/workflows/publish.yml`) only checks out this repository and runs
 snapshot on your machine (or in private automation), commit `public/data/`, and
 push; Pages will rebuild on every push to `main`.
 
-Site URL when using GitHub **project** Pages:
-`https://<owner>.github.io/<repo>/` — the workflow sets `VITE_BASE_PATH` to
-`/<repo>/` automatically. Production builds also emit `404.html` (copy of
-`index.html`) so **deep links and refreshes** on routes like `/repos/…` load
-the SPA instead of a blank GitHub 404.
+Site URL when using GitHub **project** Pages (hash routing):
+`https://<owner>.github.io/<repo>/#/` — bookmark and share links with the
+`#` (e.g. `…/agent-readiness-analytics-dashboard/#/repos`). Plain paths like
+`…/repo/repos` hit GitHub’s server and return **404** before the SPA runs.
+The workflow sets `VITE_BASE_PATH` to `/<repo>/`; static builds use
+`HashRouter` plus a small `404.html` redirect where Pages honors it.
 
 Reproduce locally:
 

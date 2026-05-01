@@ -1,12 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
 import { App } from "./App";
 import { AnalyticsProvider } from "./api/context";
 import { SessionProvider } from "./api/session";
 import "./styles.css";
 
 const staticMode = import.meta.env.VITE_STATIC_MODE === "true";
+
+/** Hash routes only: server must only ever serve index.html (use …/repo/#/… on GitHub project Pages). */
+if (
+  staticMode &&
+  (window.location.hash === "" || window.location.hash === "#")
+) {
+  window.location.hash = "/";
+}
 /** Absolute path for static JSON. Relative `./data` resolves to the wrong host when the location is `/repo` without a trailing slash (GitHub Pages). */
 const defaultBaseUrl = staticMode
   ? `${import.meta.env.BASE_URL.replace(/\/?$/, "")}/data`
@@ -25,16 +33,18 @@ const initial = staticMode
     ? { tenantId: seedTenant, token: seedToken }
     : null;
 
-const basename = import.meta.env.VITE_BASE_PATH ?? "/";
+const Router = staticMode ? HashRouter : BrowserRouter;
+const basename =
+  (import.meta.env.VITE_BASE_PATH ?? "/").replace(/\/$/, "") || "/";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter basename={basename}>
+    <Router basename={basename}>
       <SessionProvider baseUrl={baseUrl} initial={initial} staticMode={staticMode}>
         <AnalyticsProvider>
           <App />
         </AnalyticsProvider>
       </SessionProvider>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );
