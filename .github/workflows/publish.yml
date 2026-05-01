@@ -95,9 +95,13 @@ jobs:
           grep -q '<div id="root"></div>' /tmp/index.html
 
           # 2) Built JS asset under the configured base path is reachable.
+          # The asset href in index.html is already absolute (begins with `/`),
+          # so we join it onto BASE's origin, not BASE itself, to avoid
+          # doubling the repo segment.
+          origin=$(python3 -c 'import os,urllib.parse as u; p=u.urlsplit(os.environ["BASE"]); print(f"{p.scheme}://{p.netloc}")')
           asset=$(grep -oE '/[^"]*assets/[^"]*\.js' /tmp/index.html | head -n1)
           test -n "$asset"
-          fetch_until_200 "${BASE%/}${asset}" /tmp/asset.js
+          fetch_until_200 "${origin}${asset}" /tmp/asset.js
 
           # 3) Static data lives under /data and is valid JSON.
           fetch_until_200 "${BASE}data/healthz.json" /tmp/healthz.json
