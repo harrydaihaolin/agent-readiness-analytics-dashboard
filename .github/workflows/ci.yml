@@ -30,6 +30,26 @@ jobs:
         run: npm test
       - name: Build
         run: npm run build
+      - name: Build static demo (matches publish workflow)
+        env:
+          VITE_STATIC_MODE: "true"
+          VITE_TENANT_ID: agent-readiness-project
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build
+      - name: Verify SPA 404 fallback exists and redirects to hash route
+        run: |
+          set -euo pipefail
+          test -f dist/404.html
+          grep -q 'location.replace' dist/404.html
+          grep -q "${{ github.event.repository.name }}" dist/404.html
+          grep -q '#' dist/404.html
+      - name: Verify static data shipped with build
+        run: |
+          set -euo pipefail
+          test -f dist/data/healthz.json
+          test -f dist/data/tenants/agent-readiness-project/overview.json
+          python3 -c 'import json; json.load(open("dist/data/healthz.json"))'
+          python3 -c 'import json; json.load(open("dist/data/tenants/agent-readiness-project/overview.json"))'
 
   self-scan:
     runs-on: ubuntu-latest

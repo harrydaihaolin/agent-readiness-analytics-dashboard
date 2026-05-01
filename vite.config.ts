@@ -8,11 +8,15 @@ import react from "@vitejs/plugin-react";
  * When custom 404 works, redirect to hash URL so the SPA loads.
  */
 function ghPagesSpaFallback(): Plugin {
+  let outDir = "dist";
   return {
     name: "gh-pages-spa-fallback",
     apply: "build",
+    configResolved(resolved) {
+      outDir = path.resolve(resolved.root, resolved.build.outDir);
+    },
     closeBundle() {
-      const dist = path.resolve(__dirname, "dist");
+      const dist = outDir;
       const trimmed = (process.env.VITE_BASE_PATH ?? "/").replace(/^\/+|\/+$/g, "");
       const repoSegment = trimmed.split("/").filter(Boolean)[0];
       if (!repoSegment) {
