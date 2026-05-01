@@ -5,70 +5,14 @@
   "total": 12,
   "items": [
     {
-      "repo": "agent-readiness/agent-readiness",
-      "overall_score": 75.0,
-      "grade": "C",
-      "pillars": {
-        "cognitive_load": 97.7027027027027,
-        "feedback": 99.36708860759494,
-        "flow": 97.14285714285714,
-        "safety": 95.65217391304348
-      },
-      "top_findings": [
-        {
-          "pillar": "cognitive_load",
-          "check_id": "git.churn_hotspots",
-          "message": "Hotspot: src/agent_readiness/cli.py changed 10 times and is >200 lines.",
-          "severity": "warn",
-          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
-          "count": 1
-        },
-        {
-          "pillar": "flow",
-          "check_id": "headless.no_setup_prompts",
-          "message": "Setup mentions a GUI step: 'log in to the dashboard'.",
-          "severity": "warn",
-          "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "gitignore.covers_junk",
-          "message": ".gitignore covers 6/12 groups; missing: go_vendor, rust_target, jvm_class, ide_junk, terraform, logs.",
-          "severity": "warn",
-          "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-          "count": 1
-        },
-        {
-          "pillar": "cognitive_load",
-          "check_id": "docs.contributing_guide",
-          "message": "None of these expected paths exist: CONTRIBUTING.md, CONTRIBUTING, .github/CONTRIBUTING.md",
-          "severity": "info",
-          "fix_hint": "Add a CONTRIBUTING.md describing branch naming, commit style,\nrequired local checks, and the PR review flow.\n",
-          "count": 1
-        },
-        {
-          "pillar": "feedback",
-          "check_id": "feedback.test_coverage_hint",
-          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
-          "severity": "info",
-          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
-        }
-      ],
-      "scanned_at": "2026-05-01T16:49:23.366964Z",
-      "readiness_score": 97.29,
-      "dora_score": 97.47
-    },
-    {
       "repo": "agent-readiness/agent-readiness-analytics",
-      "overall_score": 75.0,
-      "grade": "C",
+      "overall_score": 95.3,
+      "grade": "S",
       "pillars": {
         "cognitive_load": 98.64864864864865,
         "feedback": 94.30379746835443,
         "flow": 93.42857142857143,
-        "safety": 91.30434782608697
+        "safety": 100.00000000000001
       },
       "top_findings": [
         {
@@ -77,7 +21,11 @@
           "message": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
           "severity": "warn",
           "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "cognitive_load",
@@ -85,7 +33,11 @@
           "message": "README references pytest but no pytest configuration was found.",
           "severity": "warn",
           "fix_hint": "If your README says \"run `pytest`\", drop a `[tool.pytest.ini_options]`\ntable in pyproject.toml so a fresh checkout actually runs tests\nwith `pytest`. Same logic for any other tool you mention. Agent\ndocs should be ≥ 100 bytes of real content, not a stub.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "flow",
@@ -93,7 +45,11 @@
           "message": "Repository has no commits (not a git repo or empty).",
           "severity": "warn",
           "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing — agents need the trail.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "flow",
@@ -101,63 +57,11 @@
           "message": "Setup section has 7 distinct commands — consider wrapping in `make install` or a setup script.",
           "severity": "warn",
           "fix_hint": "Bundle multi-step setup into a single `make setup` (or\n`scripts/setup`) target. The README then documents one command\ninstead of five. The script can still do five things — it just\nhides the noise from the agent.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "gitignore.covers_junk",
-          "message": ".gitignore covers 6/12 groups; missing: node_modules, go_vendor, rust_target, jvm_class, terraform, logs.",
-          "severity": "warn",
-          "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-          "count": 1
-        }
-      ],
-      "scanned_at": "2026-05-01T16:49:25.715250Z",
-      "readiness_score": 93.95,
-      "dora_score": 94.42
-    },
-    {
-      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
-      "overall_score": 75.0,
-      "grade": "C",
-      "pillars": {
-        "cognitive_load": 97.29729729729729,
-        "feedback": 99.36708860759494,
-        "flow": 95.42857142857143,
-        "safety": 91.30434782608697
-      },
-      "top_findings": [
-        {
-          "pillar": "cognitive_load",
-          "check_id": "readme.has_run_instructions",
-          "message": "README is missing signals for: test.",
-          "severity": "warn",
-          "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
-          "count": 1
-        },
-        {
-          "pillar": "flow",
-          "check_id": "git.has_history",
-          "message": "Repository has no commits (not a git repo or empty).",
-          "severity": "warn",
-          "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing — agents need the trail.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "gitignore.covers_junk",
-          "message": ".gitignore covers 6/12 groups; missing: python_pycache, go_vendor, rust_target, jvm_class, python_egg_info, terraform.",
-          "severity": "warn",
-          "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "safety.gitleaks_config",
-          "message": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-          "severity": "warn",
-          "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "flow",
@@ -165,164 +69,16 @@
           "message": "At least one reproducible-workspace config is present. (no clause matched)",
           "severity": "info",
           "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:27.062641Z",
-      "readiness_score": 95.34,
-      "dora_score": 95.85
-    },
-    {
-      "repo": "agent-readiness/agent-readiness-fixtures",
-      "overall_score": 75.0,
-      "grade": "C",
-      "pillars": {
-        "cognitive_load": 98.64864864864865,
-        "feedback": 91.77215189873418,
-        "flow": 100.0,
-        "safety": 95.65217391304348
-      },
-      "top_findings": [
-        {
-          "pillar": "feedback",
-          "check_id": "manifest.lockfile_present",
-          "message": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
-          "severity": "warn",
-          "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
-          "count": 1
-        },
-        {
-          "pillar": "cognitive_load",
-          "check_id": "repo_shape.large_files",
-          "message": "Large file: fixtures/noisy/src/noisy_fixture/generated.py (804 lines > 500)",
-          "severity": "warn",
-          "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
-          "count": 1
-        },
-        {
-          "pillar": "feedback",
-          "check_id": "manifest.detected",
-          "message": "No project manifest found (pyproject.toml, package.json, Cargo.toml, go.mod, ...).",
-          "severity": "warn",
-          "fix_hint": "Drop a `pyproject.toml` (or `package.json` / `Cargo.toml` / etc.)\nat the repo root with at least name + version + dependencies. For\nmonorepos, every package directory should have its own manifest.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "safety.gitleaks_config",
-          "message": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-          "severity": "warn",
-          "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-          "count": 1
-        },
-        {
-          "pillar": "feedback",
-          "check_id": "feedback.test_coverage_hint",
-          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
-          "severity": "info",
-          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
-        }
-      ],
-      "scanned_at": "2026-05-01T16:49:28.490813Z",
-      "readiness_score": 96.15,
-      "dora_score": 95.52
-    },
-    {
-      "repo": "agent-readiness/agent-readiness-landing-page",
-      "overall_score": 75.0,
-      "grade": "C",
-      "pillars": {
-        "cognitive_load": 98.37837837837837,
-        "feedback": 99.36708860759494,
-        "flow": 100.0,
-        "safety": 95.65217391304348
-      },
-      "top_findings": [
-        {
-          "pillar": "cognitive_load",
-          "check_id": "git.churn_hotspots",
-          "message": "Hotspot: package-lock.json changed 14 times and is >200 lines.",
-          "severity": "warn",
-          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
-          "count": 1
-        },
-        {
-          "pillar": "safety",
-          "check_id": "safety.gitleaks_config",
-          "message": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-          "severity": "warn",
-          "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-          "count": 1
-        },
-        {
-          "pillar": "feedback",
-          "check_id": "feedback.test_coverage_hint",
-          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
-          "severity": "info",
-          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
-        }
-      ],
-      "scanned_at": "2026-05-01T16:49:35.537923Z",
-      "readiness_score": 98.0,
-      "dora_score": 98.35
-    },
-    {
-      "repo": "agent-readiness/agent-readiness-leaderboard",
-      "overall_score": 75.0,
-      "grade": "C",
-      "pillars": {
-        "cognitive_load": 91.62162162162161,
-        "feedback": 99.36708860759494,
-        "flow": 86.07142857142857,
-        "safety": 95.65217391304348
-      },
-      "top_findings": [
-        {
-          "pillar": "flow",
-          "check_id": "entry_points.detected",
-          "message": "At least one entry-point convention is present. (no clause matched)",
-          "severity": "warn",
-          "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
-          "count": 1
-        },
-        {
-          "pillar": "cognitive_load",
-          "check_id": "repo_shape.large_files",
-          "message": "Large file: index.html (1,049 lines > 500)",
-          "severity": "warn",
-          "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
-          "count": 1
-        },
-        {
-          "pillar": "cognitive_load",
-          "check_id": "readme.has_run_instructions",
-          "message": "README is missing signals for: install.",
-          "severity": "warn",
-          "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
-          "count": 1
-        },
-        {
-          "pillar": "flow",
-          "check_id": "templates.present",
-          "message": "Issue templates, PR template, or CODEOWNERS configured. (no clause matched)",
-          "severity": "info",
-          "fix_hint": "At minimum: drop `.github/ISSUE_TEMPLATE/bug_report.md` (GitHub has\na wizard), a `.github/PULL_REQUEST_TEMPLATE.md` with a checklist,\nand a `CODEOWNERS` file mapping `*` to the team that should review\nagent-opened PRs.\n",
-          "count": 1
-        },
-        {
-          "pillar": "cognitive_load",
-          "check_id": "git.churn_hotspots",
-          "message": "Hotspot: data/scores.json changed 12 times and is >200 lines.",
-          "severity": "warn",
-          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
-          "count": 1
-        }
-      ],
-      "scanned_at": "2026-05-01T16:49:37.039104Z",
-      "readiness_score": 93.86,
-      "dora_score": 92.18
+      "scanned_at": "2026-05-01T17:50:55.566851Z",
+      "readiness_score": 96.99,
+      "dora_score": 96.6
     },
     {
       "repo": "agent-readiness/agent-readiness-action",
@@ -341,7 +97,11 @@
           "message": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
           "severity": "warn",
           "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "cognitive_load",
@@ -349,7 +109,11 @@
           "message": "README is missing signals for: install.",
           "severity": "warn",
           "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -357,7 +121,11 @@
           "message": "No project manifest found (pyproject.toml, package.json, Cargo.toml, go.mod, ...).",
           "severity": "warn",
           "fix_hint": "Drop a `pyproject.toml` (or `package.json` / `Cargo.toml` / etc.)\nat the repo root with at least name + version + dependencies. For\nmonorepos, every package directory should have its own manifest.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -365,12 +133,80 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:24.789265Z",
+      "scanned_at": "2026-05-01T17:50:54.787321Z",
       "readiness_score": 97.4,
       "dora_score": 97.27
+    },
+    {
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "overall_score": 96.3,
+      "grade": "S",
+      "pillars": {
+        "cognitive_load": 98.64864864864865,
+        "feedback": 91.77215189873418,
+        "flow": 100.0,
+        "safety": 100.00000000000001
+      },
+      "top_findings": [
+        {
+          "pillar": "feedback",
+          "check_id": "manifest.lockfile_present",
+          "message": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
+          "severity": "warn",
+          "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "cognitive_load",
+          "check_id": "repo_shape.large_files",
+          "message": "Large file: fixtures/noisy/src/noisy_fixture/generated.py (804 lines > 500)",
+          "severity": "warn",
+          "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "manifest.detected",
+          "message": "No project manifest found (pyproject.toml, package.json, Cargo.toml, go.mod, ...).",
+          "severity": "warn",
+          "fix_hint": "Drop a `pyproject.toml` (or `package.json` / `Cargo.toml` / etc.)\nat the repo root with at least name + version + dependencies. For\nmonorepos, every package directory should have its own manifest.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "feedback.test_coverage_hint",
+          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+          "severity": "info",
+          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        }
+      ],
+      "scanned_at": "2026-05-01T17:50:59.101124Z",
+      "readiness_score": 97.67,
+      "dora_score": 96.61
     },
     {
       "repo": "agent-readiness/agent-readiness-rules",
@@ -389,7 +225,11 @@
           "message": "At least one ecosystem-specific lockfile is committed. (no clause matched)",
           "severity": "warn",
           "fix_hint": "Run `poetry lock` / `npm install` / `cargo update` (whichever your\nmanifest needs) and commit the resulting lockfile. For pip-only\nPython projects, freezing `requirements.txt` to exact versions or\nswitching to `uv` / `poetry` is acceptable.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "cognitive_load",
@@ -397,7 +237,11 @@
           "message": "README is missing signals for: install, run.",
           "severity": "warn",
           "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -405,12 +249,168 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:41.725971Z",
+      "scanned_at": "2026-05-01T17:51:12.810272Z",
       "readiness_score": 98.04,
       "dora_score": 97.9
+    },
+    {
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "overall_score": 97.0,
+      "grade": "S",
+      "pillars": {
+        "cognitive_load": 96.35135135135134,
+        "feedback": 99.36708860759494,
+        "flow": 94.64285714285714,
+        "safety": 100.00000000000001
+      },
+      "top_findings": [
+        {
+          "pillar": "cognitive_load",
+          "check_id": "repo_shape.large_files",
+          "message": "Large file: data/scores.json (336,441 bytes > 51,200)",
+          "severity": "warn",
+          "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "templates.present",
+          "message": "Issue templates, PR template, or CODEOWNERS configured. (no clause matched)",
+          "severity": "info",
+          "fix_hint": "At minimum: drop `.github/ISSUE_TEMPLATE/bug_report.md` (GitHub has\na wizard), a `.github/PULL_REQUEST_TEMPLATE.md` with a checklist,\nand a `CODEOWNERS` file mapping `*` to the team that should review\nagent-opened PRs.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "cognitive_load",
+          "check_id": "git.churn_hotspots",
+          "message": "Hotspot: data/scores.json changed 12 times and is >200 lines.",
+          "severity": "warn",
+          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "devcontainer.present",
+          "message": "At least one reproducible-workspace config is present. (no clause matched)",
+          "severity": "info",
+          "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "feedback.test_coverage_hint",
+          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+          "severity": "info",
+          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        }
+      ],
+      "scanned_at": "2026-05-01T17:51:07.994530Z",
+      "readiness_score": 98.04,
+      "dora_score": 96.59
+    },
+    {
+      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
+      "overall_score": 97.2,
+      "grade": "S",
+      "pillars": {
+        "cognitive_load": 97.29729729729729,
+        "feedback": 99.36708860759494,
+        "flow": 94.28571428571429,
+        "safety": 100.00000000000001
+      },
+      "top_findings": [
+        {
+          "pillar": "cognitive_load",
+          "check_id": "repo_shape.large_files",
+          "message": "Large file: public/data/tenants/agent-readiness-project/overview.json (565 lines > 500)",
+          "severity": "warn",
+          "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "git.has_history",
+          "message": "Repository has 4 commits — fewer than min_commits=5.",
+          "severity": "warn",
+          "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing — agents need the trail.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "devcontainer.present",
+          "message": "At least one reproducible-workspace config is present. (no clause matched)",
+          "severity": "info",
+          "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "feedback.test_coverage_hint",
+          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+          "severity": "info",
+          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "branch_rulesets.configured",
+          "message": "`gh api repos/harrydaihaolin/agent-readiness-analytics-dashboard/rulesets` returned an empty result for harrydaihaolin/agent-readiness-analytics-dashboard.",
+          "severity": "info",
+          "fix_hint": "In repo Settings → Branches (or the new Rules / Rulesets UI),\nrequire: pull request before merging, status checks (your CI)\npassing, branch up-to-date. Apply to `main` and any release\nbranches.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        }
+      ],
+      "scanned_at": "2026-05-01T17:50:57.663389Z",
+      "readiness_score": 98.16,
+      "dora_score": 96.74
     },
     {
       "repo": "agent-readiness/agent-readiness-insights-protocol",
@@ -429,7 +429,11 @@
           "message": "At least one entry-point convention is present. (no clause matched)",
           "severity": "warn",
           "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -437,12 +441,80 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:33.147951Z",
+      "scanned_at": "2026-05-01T17:51:04.039477Z",
       "readiness_score": 98.13,
       "dora_score": 97.7
+    },
+    {
+      "repo": "agent-readiness/agent-readiness",
+      "overall_score": 98.2,
+      "grade": "S",
+      "pillars": {
+        "cognitive_load": 97.7027027027027,
+        "feedback": 99.36708860759494,
+        "flow": 97.14285714285714,
+        "safety": 100.00000000000001
+      },
+      "top_findings": [
+        {
+          "pillar": "cognitive_load",
+          "check_id": "git.churn_hotspots",
+          "message": "Hotspot: src/agent_readiness/cli.py changed 10 times and is >200 lines.",
+          "severity": "warn",
+          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "flow",
+          "check_id": "headless.no_setup_prompts",
+          "message": "Setup mentions a GUI step: 'log in to the dashboard'.",
+          "severity": "warn",
+          "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "cognitive_load",
+          "check_id": "docs.contributing_guide",
+          "message": "None of these expected paths exist: CONTRIBUTING.md, CONTRIBUTING, .github/CONTRIBUTING.md",
+          "severity": "info",
+          "fix_hint": "Add a CONTRIBUTING.md describing branch naming, commit style,\nrequired local checks, and the PR review flow.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "feedback.test_coverage_hint",
+          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+          "severity": "info",
+          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        }
+      ],
+      "scanned_at": "2026-05-01T17:50:53.300720Z",
+      "readiness_score": 98.81,
+      "dora_score": 98.55
     },
     {
       "repo": "agent-readiness/agent-readiness-research",
@@ -461,7 +533,11 @@
           "message": "Large file: scripts/checks_loop.py (510 lines > 500)",
           "severity": "warn",
           "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "flow",
@@ -469,7 +545,11 @@
           "message": "At least one reproducible-workspace config is present. (no clause matched)",
           "severity": "info",
           "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -477,10 +557,14 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:40.206757Z",
+      "scanned_at": "2026-05-01T17:51:11.272095Z",
       "readiness_score": 98.96,
       "dora_score": 97.74
     },
@@ -501,7 +585,11 @@
           "message": "Setup mentions a GUI step: 'log in to the dashboard'.",
           "severity": "warn",
           "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -509,10 +597,14 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:38.721302Z",
+      "scanned_at": "2026-05-01T17:51:09.734205Z",
       "readiness_score": 99.27,
       "dora_score": 99.13
     },
@@ -533,7 +625,11 @@
           "message": "Large file: data/chroma/chroma.sqlite3 (401,408 bytes > 51,200)",
           "severity": "warn",
           "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         },
         {
           "pillar": "feedback",
@@ -541,12 +637,56 @@
           "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
           "severity": "info",
           "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
-          "count": 1
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
         }
       ],
-      "scanned_at": "2026-05-01T16:49:31.375242Z",
+      "scanned_at": "2026-05-01T17:51:01.964994Z",
       "readiness_score": 99.44,
       "dora_score": 98.34
+    },
+    {
+      "repo": "agent-readiness/agent-readiness-landing-page",
+      "overall_score": 99.3,
+      "grade": "S",
+      "pillars": {
+        "cognitive_load": 98.37837837837837,
+        "feedback": 99.36708860759494,
+        "flow": 100.0,
+        "safety": 100.00000000000001
+      },
+      "top_findings": [
+        {
+          "pillar": "cognitive_load",
+          "check_id": "git.churn_hotspots",
+          "message": "Hotspot: package-lock.json changed 14 times and is >200 lines.",
+          "severity": "warn",
+          "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        },
+        {
+          "pillar": "feedback",
+          "check_id": "feedback.test_coverage_hint",
+          "message": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+          "severity": "info",
+          "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+          "count": 1,
+          "file": null,
+          "line": null,
+          "snippet": null,
+          "suggested_patch": null
+        }
+      ],
+      "scanned_at": "2026-05-01T17:51:06.395212Z",
+      "readiness_score": 99.52,
+      "dora_score": 99.44
     }
   ],
   "query": null

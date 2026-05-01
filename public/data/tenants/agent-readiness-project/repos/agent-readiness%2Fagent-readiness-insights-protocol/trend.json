@@ -2,7 +2,7 @@
   "repo": "agent-readiness/agent-readiness-insights-protocol",
   "points": [
     {
-      "timestamp": "2026-05-01T16:49:33.147951Z",
+      "timestamp": "2026-05-01T17:51:04.039477Z",
       "overall_score": 97.2,
       "pillars": {
         "cognitive_load": 100.0,

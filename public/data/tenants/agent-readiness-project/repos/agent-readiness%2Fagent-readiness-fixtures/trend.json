@@ -2,13 +2,13 @@
   "repo": "agent-readiness/agent-readiness-fixtures",
   "points": [
     {
-      "timestamp": "2026-05-01T16:49:28.490813Z",
-      "overall_score": 75.0,
+      "timestamp": "2026-05-01T17:50:59.101124Z",
+      "overall_score": 96.3,
       "pillars": {
         "cognitive_load": 98.64864864864865,
         "feedback": 91.77215189873418,
         "flow": 100.0,
-        "safety": 95.65217391304348
+        "safety": 100.00000000000001
       }
     }
   ],

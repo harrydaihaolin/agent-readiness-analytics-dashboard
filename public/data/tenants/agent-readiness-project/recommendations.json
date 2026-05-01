@@ -2,30 +2,12 @@
   "tenant_id": "agent-readiness-project",
   "items": [
     {
-      "id": "agent-readiness/agent-readiness-analytics:feedback.test_command",
-      "repo": "agent-readiness/agent-readiness-analytics",
-      "pillar": "feedback",
-      "title": "Add a discoverable test target to the Makefile",
-      "rationale": "Agents need a single canonical test command they can invoke headlessly. The strongest signal is a make test target.",
-      "estimated_lift": 6.4,
-      "severity": "warn",
-      "fix_hint": "Add a test: target that runs your test suite non-interactively.",
-      "affected_checks": [
-        "feedback.test_command"
-      ],
-      "file": "Makefile",
-      "line": null,
-      "snippet": "all:\n\tpython build.py\n",
-      "suggested_patch": "--- a/Makefile\n+++ b/Makefile\n@@ -1,2 +1,5 @@\n all:\n \tpython build.py\n+\n+test:\n+\tpytest\n",
-      "kind": "diff"
-    },
-    {
       "id": "agent-readiness/agent-readiness:headless.no_setup_prompts",
       "repo": "agent-readiness/agent-readiness",
       "pillar": "flow",
       "title": "Setup mentions a GUI step: 'log in to the dashboard'",
       "rationale": "Setup mentions a GUI step: 'log in to the dashboard'.",
-      "estimated_lift": 0.34,
+      "estimated_lift": 0.28,
       "severity": "warn",
       "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
       "affected_checks": [
@@ -43,9 +25,9 @@
       "pillar": "flow",
       "title": "Repository has no commits (not a git repo or empty)",
       "rationale": "Repository has no commits (not a git repo or empty).",
-      "estimated_lift": 0.34,
+      "estimated_lift": 0.28,
       "severity": "warn",
-      "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing \u2014 agents need the trail.\n",
+      "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing — agents need the trail.\n",
       "affected_checks": [
         "git.has_history"
       ],
@@ -60,10 +42,10 @@
       "repo": "agent-readiness/agent-readiness-analytics",
       "pillar": "flow",
       "title": "Setup section has 7 distinct commands",
-      "rationale": "Setup section has 7 distinct commands \u2014 consider wrapping in `make install` or a setup script.",
-      "estimated_lift": 0.34,
+      "rationale": "Setup section has 7 distinct commands — consider wrapping in `make install` or a setup script.",
+      "estimated_lift": 0.28,
       "severity": "warn",
-      "fix_hint": "Bundle multi-step setup into a single `make setup` (or\n`scripts/setup`) target. The README then documents one command\ninstead of five. The script can still do five things \u2014 it just\nhides the noise from the agent.\n",
+      "fix_hint": "Bundle multi-step setup into a single `make setup` (or\n`scripts/setup`) target. The README then documents one command\ninstead of five. The script can still do five things — it just\nhides the noise from the agent.\n",
       "affected_checks": [
         "setup.command_count"
       ],
@@ -77,11 +59,11 @@
       "id": "agent-readiness/agent-readiness-analytics-dashboard:git.has_history",
       "repo": "agent-readiness/agent-readiness-analytics-dashboard",
       "pillar": "flow",
-      "title": "Repository has no commits (not a git repo or empty)",
-      "rationale": "Repository has no commits (not a git repo or empty).",
-      "estimated_lift": 0.34,
+      "title": "Repository has 4 commits",
+      "rationale": "Repository has 4 commits — fewer than min_commits=5.",
+      "estimated_lift": 0.28,
       "severity": "warn",
-      "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing \u2014 agents need the trail.\n",
+      "fix_hint": "If you imported the project as a single squash, re-import preserving\nhistory (`git filter-repo` or a fresh clone of the source). For new\nprojects, just keep committing — agents need the trail.\n",
       "affected_checks": [
         "git.has_history"
       ],
@@ -97,25 +79,7 @@
       "pillar": "flow",
       "title": "At least one entry-point convention is present",
       "rationale": "At least one entry-point convention is present. (no clause matched)",
-      "estimated_lift": 0.34,
-      "severity": "warn",
-      "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
-      "affected_checks": [
-        "entry_points.detected"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-leaderboard:entry_points.detected",
-      "repo": "agent-readiness/agent-readiness-leaderboard",
-      "pillar": "flow",
-      "title": "At least one entry-point convention is present",
-      "rationale": "At least one entry-point convention is present. (no clause matched)",
-      "estimated_lift": 0.34,
+      "estimated_lift": 0.28,
       "severity": "warn",
       "fix_hint": "Add a `[project.scripts]` table to pyproject.toml mapping a CLI\nname to your `module.cli:main` entry point. For Go, add\n`cmd/<name>/main.go`. For Node, set `\"bin\"` or `\"main\"` in\npackage.json. The goal: an agent running `--help` on the package\nshould find a command that works.\n",
       "affected_checks": [
@@ -133,119 +97,11 @@
       "pillar": "flow",
       "title": "Setup mentions a GUI step: 'log in to the dashboard'",
       "rationale": "Setup mentions a GUI step: 'log in to the dashboard'.",
-      "estimated_lift": 0.34,
+      "estimated_lift": 0.28,
       "severity": "warn",
       "fix_hint": "Replace \"open the dashboard to copy your API key\" with \"set\n$YOURAPP_API_KEY (get one at https://example.com/settings/api)\".\nMove any GUI step into a one-time human bootstrap section clearly\nseparated from the headless install / run flow.\n",
       "affected_checks": [
         "headless.no_setup_prompts"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness:gitignore.covers_junk",
-      "repo": "agent-readiness/agent-readiness",
-      "pillar": "safety",
-      "title": "Gitignore: Covers Junk",
-      "rationale": ".gitignore covers 6/12 groups; missing: go_vendor, rust_target, jvm_class, ide_junk, terraform, logs.",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-      "affected_checks": [
-        "gitignore.covers_junk"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-analytics:gitignore.covers_junk",
-      "repo": "agent-readiness/agent-readiness-analytics",
-      "pillar": "safety",
-      "title": "Gitignore: Covers Junk",
-      "rationale": ".gitignore covers 6/12 groups; missing: node_modules, go_vendor, rust_target, jvm_class, terraform, logs.",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-      "affected_checks": [
-        "gitignore.covers_junk"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-analytics-dashboard:gitignore.covers_junk",
-      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
-      "pillar": "safety",
-      "title": "Gitignore: Covers Junk",
-      "rationale": ".gitignore covers 6/12 groups; missing: python_pycache, go_vendor, rust_target, jvm_class, python_egg_info, terraform.",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Run `gitignore.io` for your stack and paste the result into\n`.gitignore`. At minimum, cover: `__pycache__`, `node_modules`,\n`.env`, `dist/`, `build/`, `*.log`, IDE settings, coverage dirs.\n",
-      "affected_checks": [
-        "gitignore.covers_junk"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-analytics-dashboard:safety.gitleaks_config",
-      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
-      "pillar": "safety",
-      "title": "None of these expected paths exist:",
-      "rationale": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-      "affected_checks": [
-        "safety.gitleaks_config"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-fixtures:safety.gitleaks_config",
-      "repo": "agent-readiness/agent-readiness-fixtures",
-      "pillar": "safety",
-      "title": "None of these expected paths exist:",
-      "rationale": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-      "affected_checks": [
-        "safety.gitleaks_config"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-landing-page:safety.gitleaks_config",
-      "repo": "agent-readiness/agent-readiness-landing-page",
-      "pillar": "safety",
-      "title": "None of these expected paths exist:",
-      "rationale": "None of these expected paths exist: .gitleaks.toml, .gitleaks.yaml, .gitleaks.yml, gitleaks.toml, .trufflehog.yaml, .trufflehog.yml, .secrets.baseline, .pre-commit-config.yaml, .github/workflows/gitleaks.yml, .github/workflows/secret-scan.yml",
-      "estimated_lift": 0.29,
-      "severity": "warn",
-      "fix_hint": "Add a `.gitleaks.toml` (or `.secrets.baseline` for detect-secrets) and\nwire it into pre-commit or a GitHub Actions workflow. Example:\nhttps://github.com/gitleaks/gitleaks-action.\n",
-      "affected_checks": [
-        "safety.gitleaks_config"
       ],
       "file": null,
       "line": null,
@@ -367,7 +223,7 @@
       "pillar": "cognitive_load",
       "title": "Hotspot: src/agent_readiness/cli",
       "rationale": "Hotspot: src/agent_readiness/cli.py changed 10 times and is >200 lines.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
       "affected_checks": [
@@ -385,7 +241,7 @@
       "pillar": "cognitive_load",
       "title": "README is missing signals for: install",
       "rationale": "README is missing signals for: install.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
       "affected_checks": [
@@ -403,9 +259,9 @@
       "pillar": "cognitive_load",
       "title": "README references pytest but no pytest configuration was found",
       "rationale": "README references pytest but no pytest configuration was found.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
-      "fix_hint": "If your README says \"run `pytest`\", drop a `[tool.pytest.ini_options]`\ntable in pyproject.toml so a fresh checkout actually runs tests\nwith `pytest`. Same logic for any other tool you mention. Agent\ndocs should be \u2265 100 bytes of real content, not a stub.\n",
+      "fix_hint": "If your README says \"run `pytest`\", drop a `[tool.pytest.ini_options]`\ntable in pyproject.toml so a fresh checkout actually runs tests\nwith `pytest`. Same logic for any other tool you mention. Agent\ndocs should be ≥ 100 bytes of real content, not a stub.\n",
       "affected_checks": [
         "meta.consistency"
       ],
@@ -416,16 +272,16 @@
       "kind": "annotation"
     },
     {
-      "id": "agent-readiness/agent-readiness-analytics-dashboard:readme.has_run_instructions",
+      "id": "agent-readiness/agent-readiness-analytics-dashboard:repo_shape.large_files",
       "repo": "agent-readiness/agent-readiness-analytics-dashboard",
       "pillar": "cognitive_load",
-      "title": "README is missing signals for: test",
-      "rationale": "README is missing signals for: test.",
-      "estimated_lift": 0.23,
+      "title": "Large file: public/data/tenants/agent-readiness-project/overview",
+      "rationale": "Large file: public/data/tenants/agent-readiness-project/overview.json (565 lines > 500)",
+      "estimated_lift": 0.19,
       "severity": "warn",
-      "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
+      "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
       "affected_checks": [
-        "readme.has_run_instructions"
+        "repo_shape.large_files"
       ],
       "file": null,
       "line": null,
@@ -439,7 +295,7 @@
       "pillar": "cognitive_load",
       "title": "Large file: fixtures/noisy/src/noisy_fixture/generated",
       "rationale": "Large file: fixtures/noisy/src/noisy_fixture/generated.py (804 lines > 500)",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
       "affected_checks": [
@@ -457,7 +313,7 @@
       "pillar": "cognitive_load",
       "title": "Large file: data/chroma/chroma",
       "rationale": "Large file: data/chroma/chroma.sqlite3 (401,408 bytes > 51,200)",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
       "affected_checks": [
@@ -475,7 +331,7 @@
       "pillar": "cognitive_load",
       "title": "Hotspot: package-lock",
       "rationale": "Hotspot: package-lock.json changed 14 times and is >200 lines.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
       "affected_checks": [
@@ -491,31 +347,13 @@
       "id": "agent-readiness/agent-readiness-leaderboard:repo_shape.large_files",
       "repo": "agent-readiness/agent-readiness-leaderboard",
       "pillar": "cognitive_load",
-      "title": "Large file: index",
-      "rationale": "Large file: index.html (1,049 lines > 500)",
-      "estimated_lift": 0.23,
+      "title": "Large file: data/scores",
+      "rationale": "Large file: data/scores.json (336,441 bytes > 51,200)",
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
       "affected_checks": [
         "repo_shape.large_files"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-leaderboard:readme.has_run_instructions",
-      "repo": "agent-readiness/agent-readiness-leaderboard",
-      "pillar": "cognitive_load",
-      "title": "README is missing signals for: install",
-      "rationale": "README is missing signals for: install.",
-      "estimated_lift": 0.23,
-      "severity": "warn",
-      "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
-      "affected_checks": [
-        "readme.has_run_instructions"
       ],
       "file": null,
       "line": null,
@@ -529,7 +367,7 @@
       "pillar": "cognitive_load",
       "title": "Hotspot: data/scores",
       "rationale": "Hotspot: data/scores.json changed 12 times and is >200 lines.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "For each hotspot, identify the dominant axes of change (e.g. one\nfile holds both API routing and validation logic) and split along\nthose lines. After the split, both halves see lower per-file churn.\n",
       "affected_checks": [
@@ -547,7 +385,7 @@
       "pillar": "cognitive_load",
       "title": "Large file: scripts/checks_loop",
       "rationale": "Large file: scripts/checks_loop.py (510 lines > 500)",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Split the file into smaller modules grouped by concept, or add an\nexclusion in `.agent-readiness.toml` if the file is truly intentional\n(large generated tables, etc.).\n",
       "affected_checks": [
@@ -565,65 +403,11 @@
       "pillar": "cognitive_load",
       "title": "README is missing signals for: install, run",
       "rationale": "README is missing signals for: install, run.",
-      "estimated_lift": 0.23,
+      "estimated_lift": 0.19,
       "severity": "warn",
       "fix_hint": "Add three short sections to README: Install (one fenced block),\nRun (one fenced block showing the canonical entry point), Test\n(one fenced block). Three fenced blocks is the floor; if your\nproject genuinely needs more, write more.\n",
       "affected_checks": [
         "readme.has_run_instructions"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-analytics-dashboard:devcontainer.present",
-      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
-      "pillar": "flow",
-      "title": "At least one reproducible-workspace config is present",
-      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
-      "estimated_lift": 0.17,
-      "severity": "info",
-      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
-      "affected_checks": [
-        "devcontainer.present"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-leaderboard:templates.present",
-      "repo": "agent-readiness/agent-readiness-leaderboard",
-      "pillar": "flow",
-      "title": "Issue templates, PR template, or CODEOWNERS configured",
-      "rationale": "Issue templates, PR template, or CODEOWNERS configured. (no clause matched)",
-      "estimated_lift": 0.17,
-      "severity": "info",
-      "fix_hint": "At minimum: drop `.github/ISSUE_TEMPLATE/bug_report.md` (GitHub has\na wizard), a `.github/PULL_REQUEST_TEMPLATE.md` with a checklist,\nand a `CODEOWNERS` file mapping `*` to the team that should review\nagent-opened PRs.\n",
-      "affected_checks": [
-        "templates.present"
-      ],
-      "file": null,
-      "line": null,
-      "snippet": null,
-      "suggested_patch": null,
-      "kind": "annotation"
-    },
-    {
-      "id": "agent-readiness/agent-readiness-research:devcontainer.present",
-      "repo": "agent-readiness/agent-readiness-research",
-      "pillar": "flow",
-      "title": "At least one reproducible-workspace config is present",
-      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
-      "estimated_lift": 0.17,
-      "severity": "info",
-      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
-      "affected_checks": [
-        "devcontainer.present"
       ],
       "file": null,
       "line": null,
@@ -660,6 +444,78 @@
       "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
       "affected_checks": [
         "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics:devcontainer.present",
+      "repo": "agent-readiness/agent-readiness-analytics",
+      "pillar": "flow",
+      "title": "At least one reproducible-workspace config is present",
+      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+      "affected_checks": [
+        "devcontainer.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics-dashboard:devcontainer.present",
+      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
+      "pillar": "flow",
+      "title": "At least one reproducible-workspace config is present",
+      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+      "affected_checks": [
+        "devcontainer.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics-dashboard:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-analytics-dashboard:branch_rulesets.configured",
+      "repo": "agent-readiness/agent-readiness-analytics-dashboard",
+      "pillar": "flow",
+      "title": "Branch Rulesets: Configured",
+      "rationale": "`gh api repos/harrydaihaolin/agent-readiness-analytics-dashboard/rulesets` returned an empty result for harrydaihaolin/agent-readiness-analytics-dashboard.",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "In repo Settings → Branches (or the new Rules / Rulesets UI),\nrequire: pull request before merging, status checks (your CI)\npassing, branch up-to-date. Apply to `main` and any release\nbranches.\n",
+      "affected_checks": [
+        "branch_rulesets.configured"
       ],
       "file": null,
       "line": null,
@@ -740,6 +596,60 @@
       "kind": "annotation"
     },
     {
+      "id": "agent-readiness/agent-readiness-leaderboard:templates.present",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "flow",
+      "title": "Issue templates, PR template, or CODEOWNERS configured",
+      "rationale": "Issue templates, PR template, or CODEOWNERS configured. (no clause matched)",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "At minimum: drop `.github/ISSUE_TEMPLATE/bug_report.md` (GitHub has\na wizard), a `.github/PULL_REQUEST_TEMPLATE.md` with a checklist,\nand a `CODEOWNERS` file mapping `*` to the team that should review\nagent-opened PRs.\n",
+      "affected_checks": [
+        "templates.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:devcontainer.present",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "flow",
+      "title": "At least one reproducible-workspace config is present",
+      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+      "affected_checks": [
+        "devcontainer.present"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-leaderboard:feedback.test_coverage_hint",
+      "repo": "agent-readiness/agent-readiness-leaderboard",
+      "pillar": "feedback",
+      "title": "None of these expected paths exist:",
+      "rationale": "None of these expected paths exist: .coveragerc, codecov.yml, .codecov.yml, coveralls.yml, .coveralls.yml",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
+      "affected_checks": [
+        "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
       "id": "agent-readiness/agent-readiness-pro:feedback.test_coverage_hint",
       "repo": "agent-readiness/agent-readiness-pro",
       "pillar": "feedback",
@@ -750,6 +660,24 @@
       "fix_hint": "Add a coverage config (`.coveragerc` for pytest-cov, `codecov.yml` for\nCodecov) so coverage signal is visible to both humans and agents.\n",
       "affected_checks": [
         "feedback.test_coverage_hint"
+      ],
+      "file": null,
+      "line": null,
+      "snippet": null,
+      "suggested_patch": null,
+      "kind": "annotation"
+    },
+    {
+      "id": "agent-readiness/agent-readiness-research:devcontainer.present",
+      "repo": "agent-readiness/agent-readiness-research",
+      "pillar": "flow",
+      "title": "At least one reproducible-workspace config is present",
+      "rationale": "At least one reproducible-workspace config is present. (no clause matched)",
+      "estimated_lift": 0.14,
+      "severity": "info",
+      "fix_hint": "Drop a minimal `.devcontainer/devcontainer.json` referencing a\nMicrosoft base image plus `postCreateCommand: pip install -e .`.\nFor Nix shops, `flake.nix` with a dev shell is the equivalent.\n",
+      "affected_checks": [
+        "devcontainer.present"
       ],
       "file": null,
       "line": null,
@@ -799,7 +727,7 @@
       "pillar": "cognitive_load",
       "title": "None of these expected paths exist: CONTRIBUTING",
       "rationale": "None of these expected paths exist: CONTRIBUTING.md, CONTRIBUTING, .github/CONTRIBUTING.md",
-      "estimated_lift": 0.12,
+      "estimated_lift": 0.1,
       "severity": "info",
       "fix_hint": "Add a CONTRIBUTING.md describing branch naming, commit style,\nrequired local checks, and the PR review flow.\n",
       "affected_checks": [
@@ -812,5 +740,5 @@
       "kind": "annotation"
     }
   ],
-  "generated_at": "2026-05-01T16:49:49.530857Z"
+  "generated_at": "2026-05-01T17:53:29.163712Z"
 }

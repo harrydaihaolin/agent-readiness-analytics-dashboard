@@ -2,7 +2,7 @@
   "repo": "agent-readiness/agent-readiness-rules",
   "points": [
     {
-      "timestamp": "2026-05-01T16:49:41.725971Z",
+      "timestamp": "2026-05-01T17:51:12.810272Z",
       "overall_score": 96.9,
       "pillars": {
         "cognitive_load": 97.29729729729729,
