@@ -34,8 +34,15 @@ const initial = staticMode
     : null;
 
 const Router = staticMode ? HashRouter : BrowserRouter;
-const basename =
-  (import.meta.env.VITE_BASE_PATH ?? "/").replace(/\/$/, "") || "/";
+/**
+ * BrowserRouter: basename is the URL prefix (e.g. /agent-readiness-analytics-dashboard).
+ * HashRouter:    basename matches the *parsed hash*, which always starts at `/`,
+ *                so it must be "/" — passing the deploy prefix here makes every
+ *                route silently not match (header renders, body stays empty).
+ */
+const basename = staticMode
+  ? "/"
+  : (import.meta.env.VITE_BASE_PATH ?? "/").replace(/\/$/, "") || "/";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
