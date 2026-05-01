@@ -175,7 +175,10 @@ export class AnalyticsClient {
 
   async ping(): Promise<boolean> {
     try {
-      const r = await this.fetcher(`${this.baseUrl}/healthz`);
+      const path = this.staticMode
+        ? `${this.baseUrl}/healthz.json`
+        : `${this.baseUrl}/healthz`;
+      const r = await this.fetcher(path);
       return r.ok;
     } catch {
       return false;

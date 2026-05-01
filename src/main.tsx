@@ -7,7 +7,10 @@ import { SessionProvider } from "./api/session";
 import "./styles.css";
 
 const staticMode = import.meta.env.VITE_STATIC_MODE === "true";
-const defaultBaseUrl = staticMode ? "./data" : "/api";
+/** Absolute path for static JSON. Relative `./data` resolves to the wrong host when the location is `/repo` without a trailing slash (GitHub Pages). */
+const defaultBaseUrl = staticMode
+  ? `${import.meta.env.BASE_URL.replace(/\/?$/, "")}/data`
+  : "/api";
 const baseUrl = import.meta.env.VITE_ANALYTICS_BASE_URL ?? defaultBaseUrl;
 const dev = import.meta.env.DEV;
 const seedTenant = import.meta.env.VITE_TENANT_ID;
