@@ -73,26 +73,40 @@ jobs:
           fi
           echo "Probing $BASE"
 
+          # actions/deploy-pages reports success the moment the deployment is
+          # registered, but the global Pages CDN can serve a 404 for ~30–60 s
+          # after that. Retry until we see 200 (or give up after a few minutes).
+          fetch_until_200() {
+            local url=$1 out=$2 code=""
+            for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
+              code=$(curl --silent --location --output "$out" --write-out '%{http_code}' "$url" || true)
+              if [ "$code" = "200" ]; then
+                echo "  $url → 200 (attempt $attempt)"; return 0
+              fi
+              echo "  $url → $code (attempt $attempt), retrying in 10s…"
+              sleep 10
+            done
+            echo "::error::Gave up after 12 attempts: $url returned $code"
+            return 1
+          }
+
           # 1) Root serves the SPA shell (index.html with #root mount point).
-          curl --fail --silent --show-error --location --retry 6 --retry-delay 5 \
-            --retry-all-errors "$BASE" -o /tmp/index.html
+          fetch_until_200 "$BASE" /tmp/index.html
           grep -q '<div id="root"></div>' /tmp/index.html
 
           # 2) Built JS asset under the configured base path is reachable.
           asset=$(grep -oE '/[^"]*assets/[^"]*\.js' /tmp/index.html | head -n1)
           test -n "$asset"
-          curl --fail --silent --show-error -o /dev/null \
-            "${BASE%/}${asset}"
+          fetch_until_200 "${BASE%/}${asset}" /tmp/asset.js
 
           # 3) Static data lives under /data and is valid JSON.
-          curl --fail --silent --show-error "${BASE}data/healthz.json" \
-            | python3 -c 'import json,sys; json.load(sys.stdin)'
+          fetch_until_200 "${BASE}data/healthz.json" /tmp/healthz.json
+          python3 -c 'import json; json.load(open("/tmp/healthz.json"))'
 
-          # 4) Deep SPA route returns the 404 fallback redirect (not a generic
-          #    GitHub 404). Pages serves the redirect with HTTP 404, which is
-          #    expected — we just need the body to be the SPA fallback.
+          # 4) Deep SPA route should hit the 404 fallback redirect (not the
+          #    stock GitHub 404). Pages returns 404 + our redirect HTML.
           code=$(curl --silent --output /tmp/deep.html --write-out '%{http_code}' \
-            "${BASE}repos/agent-readiness%2Fagent-readiness-analytics-dashboard")
+            "${BASE}repos/agent-readiness%2Fagent-readiness-analytics-dashboard" || true)
           if [ "$code" != "200" ] && [ "$code" != "404" ]; then
             echo "::error::Unexpected status $code on deep route"; exit 1
           fi
