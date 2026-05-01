@@ -107,6 +107,21 @@ jobs:
           fetch_until_200 "${BASE}data/healthz.json" /tmp/healthz.json
           python3 -c 'import json; json.load(open("/tmp/healthz.json"))'
 
+          # 3b) Per-repo data uses double-encoded segments on disk
+          # (`agent-readiness%2F...`), so the URL must contain `%252F`.
+          # If a future change reverts that encoding, the static fetch
+          # silently 404s and the dashboard renders the SPA fallback HTML
+          # as an "error" message — which is what this rule was added to
+          # prevent. Probe one known repo to keep that contract honest.
+          fetch_until_200 \
+            "${BASE}data/tenants/agent-readiness-project/repos/agent-readiness%252Fagent-readiness-analytics/recommendations.json" \
+            /tmp/repo-rec.json
+          python3 -c 'import json; json.load(open("/tmp/repo-rec.json"))'
+          fetch_until_200 \
+            "${BASE}data/tenants/agent-readiness-project/repos/agent-readiness%252Fagent-readiness-analytics/trend.json" \
+            /tmp/repo-trend.json
+          python3 -c 'import json; json.load(open("/tmp/repo-trend.json"))'
+
           # 4) Deep SPA route should hit the 404 fallback redirect (not the
           #    stock GitHub 404). Pages returns 404 + our redirect HTML.
           code=$(curl --silent --output /tmp/deep.html --write-out '%{http_code}' \

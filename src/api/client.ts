@@ -21,6 +21,34 @@ export class AnalyticsApiError extends Error {
   }
 }
 
+/**
+ * Static-mode: the on-disk export tool encodes `/` in repo names as `%2F`
+ * in the directory NAME (e.g. `agent-readiness%2Fagent-readiness-analytics`).
+ * GitHub Pages URL-decodes the request once, so we must double-encode the
+ * segment in our request URL — otherwise the server looks for a nested
+ * directory that doesn't exist, returns 404 + the SPA fallback HTML, and
+ * the dashboard renders that HTML as an error message.
+ */
+function encodeStaticSegment(value: string): string {
+  return encodeURIComponent(encodeURIComponent(value));
+}
+
+/**
+ * Strip / shorten error response bodies before they reach the UI. HTTP servers
+ * often respond with HTML (e.g. an SPA 404 fallback) on errors; surfacing the
+ * raw body in the page is both ugly and a small XSS risk if a renderer ever
+ * forgets to escape. Detect HTML / overly-long / non-text bodies and replace
+ * with a concise summary that includes the status.
+ */
+function summarizeErrorBody(status: number, statusText: string, body: string): string {
+  const trimmed = body.trim();
+  const looksLikeHtml = /^<!doctype\b|^<html\b/i.test(trimmed) || /<\/?[a-z][^>]*>/i.test(trimmed);
+  if (!trimmed || looksLikeHtml || trimmed.length > 200) {
+    return statusText ? `HTTP ${status} ${statusText}` : `HTTP ${status}`;
+  }
+  return trimmed;
+}
+
 export interface AnalyticsClientConfig {
   baseUrl?: string;
   token: string;
@@ -65,9 +93,26 @@ export class AnalyticsClient {
     });
     if (!res.ok) {
       const body = await res.text();
-      throw new AnalyticsApiError(res.status, body || res.statusText);
+      throw new AnalyticsApiError(
+        res.status,
+        summarizeErrorBody(res.status, res.statusText, body),
+      );
     }
-    return (await res.json()) as T;
+    // Defensive: if a server returns HTML on a 200 (e.g. an SPA 404 fallback
+    // misconfigured to also intercept .json), refuse to parse it as JSON.
+    const contentType = res.headers.get("content-type") ?? "";
+    const text = await res.text();
+    if (contentType && !/\bjson\b/i.test(contentType) && /^\s*<!doctype\b|^\s*<html\b/i.test(text)) {
+      throw new AnalyticsApiError(
+        502,
+        `Expected JSON from ${url} but got ${contentType.split(";")[0] || "HTML"}`,
+      );
+    }
+    try {
+      return JSON.parse(text) as T;
+    } catch {
+      throw new AnalyticsApiError(502, `Invalid JSON from ${url}`);
+    }
   }
 
   overview(tenantId: string): Promise<TenantOverview> {
@@ -87,10 +132,11 @@ export class AnalyticsClient {
   ): Promise<TenantRecommendations> {
     if (this.staticMode) {
       // Static-mode demo: per-repo files live under
-      // /tenants/<id>/repos/<encoded-repo>/recommendations.json — same
-      // encoding convention the trend export already uses.
+      // /tenants/<id>/repos/<encoded-repo>/recommendations.json — the export
+      // tool encodes `/` as `%2F` in the directory name on disk, so we must
+      // double-encode here to survive the HTTP decode.
       return this.req(
-        `/tenants/${encodeURIComponent(tenantId)}/repos/${encodeURIComponent(repo)}/recommendations`,
+        `/tenants/${encodeURIComponent(tenantId)}/repos/${encodeStaticSegment(repo)}/recommendations`,
       );
     }
     const params = new URLSearchParams({
@@ -103,9 +149,10 @@ export class AnalyticsClient {
   }
 
   trend(tenantId: string, repo: string, windowDays = 30): Promise<RepoTrend> {
-    const path = `/tenants/${encodeURIComponent(tenantId)}/repos/${encodeURIComponent(
-      repo,
-    )}/trend`;
+    const encodedRepo = this.staticMode
+      ? encodeStaticSegment(repo)
+      : encodeURIComponent(repo);
+    const path = `/tenants/${encodeURIComponent(tenantId)}/repos/${encodedRepo}/trend`;
     return this.req(this.staticMode ? path : `${path}?window_days=${windowDays}`);
   }
 
