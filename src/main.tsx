@@ -16,7 +16,11 @@ const dev = import.meta.env.DEV;
 const seedTenant = import.meta.env.VITE_TENANT_ID;
 const seedToken = import.meta.env.VITE_ANALYTICS_TOKEN;
 const initial = staticMode
-  ? { tenantId: seedTenant ?? "demo", token: "static" }
+  ? {
+      /** Committed JSON lives under `public/data/tenants/agent-readiness-project/`. */
+      tenantId: seedTenant || "agent-readiness-project",
+      token: "static",
+    }
   : dev && seedTenant && seedToken
     ? { tenantId: seedTenant, token: seedToken }
     : null;

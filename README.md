@@ -43,7 +43,9 @@ push; Pages will rebuild on every push to `main`.
 
 Site URL when using GitHub **project** Pages:
 `https://<owner>.github.io/<repo>/` — the workflow sets `VITE_BASE_PATH` to
-`/<repo>/` automatically.
+`/<repo>/` automatically. Production builds also emit `404.html` (copy of
+`index.html`) so **deep links and refreshes** on routes like `/repos/…` load
+the SPA instead of a blank GitHub 404.
 
 Reproduce locally:
 
