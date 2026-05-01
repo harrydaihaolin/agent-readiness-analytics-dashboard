@@ -12,6 +12,10 @@ Conventions for AI coding agents working in this repository.
 - Build:          `npm run build`
 - Self-scan:      `agent-readiness scan . --fail-below 95`
 
+## CI and the feedback loop
+
+**CI is part of the feedback loop.** After you push or update a PR, **monitor GitHub Actions / workflow runs and check results**. When **CI fails**, read the logs, **fix the root cause**, and push follow-up commits. Do not stop while checks are red or ignore failing workflows.
+
 ## Source of truth
 
 - `src/types/index.ts` — TypeScript mirror of
