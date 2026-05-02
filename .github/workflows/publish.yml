@@ -34,10 +34,32 @@ jobs:
       - name: Install dashboard deps
         run: npm ci
 
+      - name: Set up Python (for tenant synth)
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # pin to v5
+        with:
+          python-version: "3.12"
+
+      - name: Synthesise v3 1000-repo tenant from leaderboard
+        # Pulls the public scores_v3_*.json from the leaderboard repo
+        # and materialises the agent-readiness-v3-1000 tenant tree
+        # (overview/repos/recommendations + per-repo trend +
+        # recommendations) under public/data/tenants/. Best-effort: a
+        # transient fetch failure must not red the deploy — the demo
+        # still has the agent-readiness-project tenant committed.
+        env:
+          AR_V3_SCORES_URL: ${{ vars.AR_V3_SCORES_URL || 'https://raw.githubusercontent.com/harrydaihaolin/agent-readiness-leaderboard/main/data/releases/scores_v3_1000_2026-05-01.json' }}
+        run: |
+          set -euo pipefail
+          python scripts/synthesise_v3_tenant.py --source "$AR_V3_SCORES_URL" || \
+            echo "::warning::v3 tenant synth failed; falling back to committed tenant"
+
       - name: Build static dashboard
         env:
           VITE_STATIC_MODE: "true"
-          VITE_TENANT_ID: agent-readiness-project
+          # Default tenant is now the broad v3 cohort so first-time
+          # visitors land on the 1000-repo dataset; the workspace
+          # tenant remains accessible by URL.
+          VITE_TENANT_ID: agent-readiness-v3-1000
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
 
@@ -121,6 +143,21 @@ jobs:
             "${BASE}data/tenants/agent-readiness-project/repos/agent-readiness%252Fagent-readiness-analytics/trend.json" \
             /tmp/repo-trend.json
           python3 -c 'import json; json.load(open("/tmp/repo-trend.json"))'
+
+          # 3c) v3 1000-repo tenant: confirm overview + a stable repo
+          # are present. Picks a repo with broad community recognition
+          # so the path is durable across snapshots; if synthesise_v3
+          # ever silently misses langchain (it shouldn't — it's in
+          # both the curated and the discovered cohort), this red-
+          # lines the deploy.
+          fetch_until_200 \
+            "${BASE}data/tenants/agent-readiness-v3-1000/overview.json" \
+            /tmp/v3-overview.json
+          python3 -c 'import json; d=json.load(open("/tmp/v3-overview.json")); assert d["tenant_id"]=="agent-readiness-v3-1000", d; assert d["repo_count"] >= 100, d'
+          fetch_until_200 \
+            "${BASE}data/tenants/agent-readiness-v3-1000/repos/langchain-ai%252Flangchain/recommendations.json" \
+            /tmp/v3-repo-rec.json
+          python3 -c 'import json; d=json.load(open("/tmp/v3-repo-rec.json")); assert d["tenant_id"]=="agent-readiness-v3-1000", d'
 
           # 4) Deep SPA route should hit the 404 fallback redirect (not the
           #    stock GitHub 404). Pages returns 404 + our redirect HTML.
