@@ -2,6 +2,24 @@
   "tenant_id": "agent-readiness-project",
   "items": [
     {
+      "id": "agent-readiness/agent-readiness-action:security.policy_present",
+      "repo": "agent-readiness/agent-readiness-action",
+      "pillar": "safety",
+      "title": "Add a SECURITY.md so vulnerability reports have a private channel",
+      "rationale": "No SECURITY.md found \u2014 agents that find security issues default to opening a public issue.",
+      "estimated_lift": 2.4,
+      "severity": "info",
+      "fix_hint": "Add a SECURITY.md at the repo root with a private reporting channel and supported-versions table.",
+      "affected_checks": [
+        "security.policy_present"
+      ],
+      "file": "SECURITY.md",
+      "line": null,
+      "snippet": null,
+      "suggested_patch": "--- a/SECURITY.md\n+++ b/SECURITY.md\n@@ -0,0 +1,11 @@\n+# Security policy\n+\n+## Reporting a vulnerability\n+\n+Please **do not open a public issue**. Email the maintainers at\n+`<security@example.com>` (replace with the right address) or use\n+GitHub's private vulnerability reporting if enabled.\n+\n+## Response window\n+\n+We aim to acknowledge reports within 2 business days.\n",
+      "kind": "diff"
+    },
+    {
       "id": "agent-readiness/agent-readiness-action:manifest.lockfile_present",
       "repo": "agent-readiness/agent-readiness-action",
       "pillar": "feedback",
