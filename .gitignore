@@ -24,3 +24,10 @@ target/
 *.tfstate.*
 .pytest_cache/
 htmlcov/
+
+# v3 1000-repo demo tenant is regenerated each publish from the
+# leaderboard's frozen scores envelope (see scripts/synthesise_v3_tenant.py
+# and .github/workflows/publish.yml). Committing ~2000 per-repo JSON
+# files would bloat git history; the publish workflow synthesises them
+# fresh into public/ before npm run build.
+public/data/tenants/agent-readiness-v3-1000/
