@@ -2,6 +2,24 @@
   "tenant_id": "agent-readiness-project",
   "items": [
     {
+      "id": "agent-readiness/agent-readiness-fixtures:safety.dependency_automation",
+      "repo": "agent-readiness/agent-readiness-fixtures",
+      "pillar": "safety",
+      "title": "Configure Dependabot to keep dependencies fresh",
+      "rationale": "No automated dependency scanner detected \u2014 vulnerable transitive deps go unflagged.",
+      "estimated_lift": 4.1,
+      "severity": "warn",
+      "fix_hint": "Drop a `.github/dependabot.yml` that updates GitHub Actions and your language ecosystems weekly.",
+      "affected_checks": [
+        "safety.dependency_automation"
+      ],
+      "file": ".github/dependabot.yml",
+      "line": null,
+      "snippet": null,
+      "suggested_patch": "--- a/.github/dependabot.yml\n+++ b/.github/dependabot.yml\n@@ -0,0 +1,12 @@\n+version: 2\n+updates:\n+  - package-ecosystem: \"github-actions\"\n+    directory: \"/\"\n+    schedule:\n+      interval: \"weekly\"\n+  - package-ecosystem: \"pip\"\n+    directory: \"/\"\n+    schedule:\n+      interval: \"weekly\"\n",
+      "kind": "diff"
+    },
+    {
       "id": "agent-readiness/agent-readiness-fixtures:safety.gitleaks_config",
       "repo": "agent-readiness/agent-readiness-fixtures",
       "pillar": "safety",

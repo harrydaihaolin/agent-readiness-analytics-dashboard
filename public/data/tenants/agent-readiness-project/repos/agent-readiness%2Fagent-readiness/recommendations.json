@@ -2,6 +2,24 @@
   "tenant_id": "agent-readiness-project",
   "items": [
     {
+      "id": "agent-readiness/agent-readiness:agent_docs.canonical",
+      "repo": "agent-readiness/agent-readiness",
+      "pillar": "cognitive_load",
+      "title": "Add a canonical AGENTS.md",
+      "rationale": "No AGENTS.md at repo root \u2014 agents have to infer the canonical commands.",
+      "estimated_lift": 5.5,
+      "severity": "warn",
+      "fix_hint": "Add an AGENTS.md describing canonical install/test/lint commands and any do-not-touch paths.",
+      "affected_checks": [
+        "agent_docs.canonical"
+      ],
+      "file": "AGENTS.md",
+      "line": null,
+      "snippet": null,
+      "suggested_patch": "--- a/AGENTS.md\n+++ b/AGENTS.md\n@@ -0,0 +1,18 @@\n+# Agent guide\n+\n+Conventions for AI coding agents working in this repository.\n+\n+## Canonical commands\n+\n+- Install dev deps: `<replace with your install command>`\n+- Run tests:        `<replace with your test command>`\n+- Lint:             `<replace with your lint command>`\n+\n+## Do-not-touch\n+\n+- Generated/vendored directories (list them).\n+- Lockfiles unless the change is intentional.\n+\n+## Headless contract\n+\n+The canonical commands above must run non-interactively.\n",
+      "kind": "diff"
+    },
+    {
       "id": "agent-readiness/agent-readiness:headless.no_setup_prompts",
       "repo": "agent-readiness/agent-readiness",
       "pillar": "flow",
